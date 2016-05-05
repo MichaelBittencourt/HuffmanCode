@@ -1,0 +1,165 @@
+####################################################
+1) Adicionar arquivo ao tracking do Git
+
+$git add 'arquivo'
+
+####################################################
+2) Fazer um commit
+
+a)Dando commit após dar "git add XXX"
+ $git commit -m "Comentario do commit"
+
+b)Dando commit sem ter que dar add(todas as modificacoes)
+ $git commit -a -m "Comentario do commit"
+
+####################################################
+3) Criar um repositorio novo
+
+$git init
+
+####################################################
+4) Fazendo o git ignorar arquivos
+
+a)Cria um arquivo .gitignore
+b)Poe no gitignore o arquivo a ser ignorado
+Exemplo:
+	############################################
+	# .gitignore                               #
+	############################################
+	#->.gitignore                              #
+	#->renno.txt                               #
+	#->temp/                                   #
+	#->meusfilmes.txt                          # 
+	############################################
+
+Detalhes: Apenas uma informação por linha.
+
+####################################################
+5) Pegando o status do git
+
+$git status
+
+####################################################
+6) Para ver o que foi mudado DENTRO do arquivo
+
+a)Working area
+ $git diff
+b)Staged area
+ $git diff --staged
+
+####################################################
+7) Exibir log
+
+a)Poucas informações
+ $git log
+
+b)Mais informações
+ $git log -p
+
+c)git log --pretty=oneline
+
+d)Reduzir os logs
+ $git log -p -x
+ x -> inteiro...1,2,3,4...
+
+*Para sair aperte Q
+
+d)Para interface
+ $gitk
+
+
+###################################################
+
+8) Linkando um novo commit com o antigo
+
+$git commit --amend -m "Mensagem"
+
+###################################################
+
+9) Removendo arquivos do add
+
+$git reset HEAD arquivo.txt
+
+##################################################
+
+10) Revertendo as tretas que fez
+
+$git checkout -- arquivo.txt
+* ISSO É ANTES DO COMMIT AINDA NO STATUS
+##################################################
+
+11) Removendo arquivos do repositorio 
+
+$git rm arquivo.txt
+
+##################################################
+
+12) Criando Tags
+
+$git tag -a nomedaTag -m "Comentario da tag"
+
+a) Tag para commits antigos
+ $git tag -a nomedaTag -m CHAVE -m "Comentario da tag"
+
+##################################################
+
+13) Ver as tags
+
+$git tag
+
+a) Mais info
+ $git show nomedaTag
+
+##################################################
+
+14) Voltando os arquivos para arquivos marcados por uma tag
+
+$git checkout nomedaTag
+
+##################################################
+
+15) Criando ramificações (branch) 
+
+$git branch NOMEBRANCH
+
+a)Para trocar para o branch
+ $git checkout NOMEBRANCH
+
+b)Voltar para o master
+ $git checkout master
+
+##################################################
+
+16) Colocando as ramificações(branch) pro master
+* TEM QUE ESTAR NO DESTINO QUE VAI RECEBER AS ALTERACOES
+$git merge teste
+
+##################################################
+
+17) Para listar os branch
+
+$git branch
+
+##################################################
+
+18) Deletar os branch
+
+$git branch -d NOMEBRANCH
+
+##################################################
+
+19) Atualizar os dados do servidor para voce
+
+$git pull origin master
+
+a) Para evitar o merge automatico acima
+ $git fetch origin branchname
+
+##################################################
+
+20) Mandar os dados para o servidor
+
+$git push origin master
+
+##################################################
+
