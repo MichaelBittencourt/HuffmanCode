@@ -16,18 +16,18 @@ int main(int argc, char *args[])
     }
     else
     {
-		CompressorIF & compressor =  new CompressorHuffmanAntigo(args[2], args[3]);
+		CompressorIF * compressor =  new CompressorHuffmanAntigo(args[2], args[3]);
 //		CompressorHuffmanAntigo * compressor = new CompressorHuffmanAntigo(args[2], args[3]);
 				
         if(strcmp(args[1], "-c")==0)
         {
-			compressor.compress();//				CompressFile(args[2], args[3]);//comprimir arquivo
+			compressor->compress();//				CompressFile(args[2], args[3]);//comprimir arquivo
         }
         else
         {
             if(strcmp(args[1], "-x")==0)
             {
-                 compressor.descompress(); //DescompressFile(args[3],args[2]);//descomprimir arquivo
+                 compressor->descompress(); //DescompressFile(args[3],args[2]);//descomprimir arquivo
             }
             else
             {
