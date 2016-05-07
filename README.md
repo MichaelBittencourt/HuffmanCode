@@ -11,10 +11,10 @@ Code that implements a simple huffman algorithm.
 		a) Open a terminal, and run in directory:
 			$make
 		
-		b) An output named 'saida' will be created.
+		b) An output named 'main.out' will be created.
 		
 		c) Then, run:
-			$./saida -c file_to_be_compress.ext output_compressed
+			$./main.out -c file_to_be_compress.ext output_compressed
 		
 		d) Your file will be compressed.
 		
@@ -24,10 +24,10 @@ Code that implements a simple huffman algorithm.
 		a) Open a terminal, and run in directory:
 			$make
 		
-		b) An output named 'saida' will be created.
+		b) An output named 'main.out' will be created.
 		
 		c) Then, run:
-			$./saida -x file_to_be_decompress.ext original_output
+			$./main.out -x file_to_be_decompress.ext original_output
 		
 		d) Your original file will be retrieve.
 		
