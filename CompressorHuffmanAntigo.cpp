@@ -169,7 +169,10 @@ Node * CompressorHuffmanAntigo::BuildHuffmanTree(ListaDENode* lista, Node* arvor
         //system("PAUSE");
     }
     //arvore = lista->no;
-    lista->no->parent == NULL;// tem que fazer isso fora;
+
+/*Comentei esse  Trecho para ver se limpo o Werror */
+//    lista->no->parent == NULL;// tem que fazer isso fora;
+/**************************************************/
     //inOrder(lista->no);
     return lista->no;
 }
@@ -288,10 +291,10 @@ void CompressorHuffmanAntigo::invertTable(unsigned char ** table, int numNodeTre
 
 unsigned char ** CompressorHuffmanAntigo::tableTree(Node * arvore, int numNodeTree, int typeNodeTree)
 {
-    int test=0;
+    //int test=0;
     //printf("\nentrou na tableTree\n");
     unsigned char ** table = (unsigned char**)malloc(sizeof(unsigned char*)*typeNodeTree);/**(numNodeTree+2));isso esse pedaço eu vou alocar na outra função a cada loop*/
-    test = achaFolha(table, arvore, 0, numNodeTree);
+    /*test = */achaFolha(table, arvore, 0, numNodeTree);
     //printf("\npassou da acha folha\n");
     invertTable(table, numNodeTree, typeNodeTree);
     return table;
@@ -609,7 +612,7 @@ void CompressorHuffmanAntigo::DescompressFile(char ArquivoDescomprimido[], char 
         char bin[8];
         Node* temp=NULL;
         temp = huffmanTree;
-		int test = 0;
+		//int test = 0;
 		int cont = -1;// igual a -1 pois padding não pode ser igual a -1 logo de inicio, porem ele poderia ser igual a 0
 		unsigned char gambiarra;
     while(!feof(arqComprimido))
@@ -678,7 +681,7 @@ void CompressorHuffmanAntigo::FreeListValue(ListaDENode ** lista){
 }
 
 void CompressorHuffmanAntigo::FreeTableBytes(unsigned char *** tabela, int qtdTiposCaracter){
-	int i = 0, j = 0; 
+	int i = 0;// j = 0; 
 	unsigned char ** test = (*tabela);
 	for(i = 0; i < qtdTiposCaracter; i++){
 		free(test[i]);
@@ -704,7 +707,7 @@ char CompressorHuffmanAntigo::bintoASCII(char binario[8])
 void CompressorHuffmanAntigo::ascIItoBin(unsigned char let, char bin[8])
 {
     int i;
-    int j;
+    //int j;
     for(i = 0; i<8; i++)
     {
 

@@ -1,10 +1,27 @@
+#ifndef COMPRESSOR_HUFFMAN_H
+#define COMPRESSOR_HUFFMAN_H
+
+#include <iostream>
+#include "CompressorIF.h"
+#include "DadosCompressorIF.h"
+
+using namespace std;
+
 class CompressorHuffman : public CompressorIF{
 	
 	protected:
-		DadosCompressorIF dados;
+		DadosCompressorIF & dados;
 	
 	public:
-		void CompressorHuffman();
+		//CompressorHuffman();
+		CompressorHuffman(DadosCompressorIF & d);
+		
+		void setDados(DadosCompressorIF & dados);
+		DadosCompressorIF & getDados();
+		bool compress();
+		bool descompress();
 		
 		~CompressorHuffman();
-}
+};
+
+#endif

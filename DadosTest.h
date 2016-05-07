@@ -1,11 +1,19 @@
+#ifndef DADOS_TEST_H
+#define DADOS_TEST_H
+
+#include <iostream>
 #include "DadosCompressorIF.h"
 
-class DadosCompressorIF : DadosCompressorIF {
+using namespace std;
+
+class DadosTest : public DadosCompressorIF {
 	public:
-		DadosCompressorIF() = 0;
-		virtual getCountByte(char byte) = 0;//Metodos Referente a leitura e escrita dos dados.
+		DadosTest();
+		unsigned int getCountByte(char byte);//Metodos Referente a leitura e escrita dos dados.
 		/*Os metodos e estruturas aqui listadas devem tratar leitura e escritas dos dados, fornecendo
 		o conjunto de bytes necessarios para implementação do compressor.*/
-		virtual void operator = (DadosCompressorIF copia) = 0;//colocar const eu acho. Não sei se devo colocar aqui
-		virtual ~DadosCompressorIF() = 0;
-}
+		void operator = (DadosCompressorIF & copia);//colocar const eu acho. Não sei se devo colocar aqui
+		~DadosTest();
+};
+
+#endif
