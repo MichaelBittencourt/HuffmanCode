@@ -1,3 +1,8 @@
+# Directories for test files
+compress_files/
+decompress_files/
+files_for_test/
+
 # Compiled Object files
 *.slo
 *.lo

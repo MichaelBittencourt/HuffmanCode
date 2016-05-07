@@ -536,7 +536,7 @@ void CompressorHuffmanAntigo::CompressFile(char * nomeArquivoDescomprimido, char
     printf("\nFree tabela\n");
 
 }
-void CompressorHuffmanAntigo::DescompressFile(char ArquivoDescomprimido[], char ArquivoComprimido[])
+void CompressorHuffmanAntigo::DecompressFile(char ArquivoDescomprimido[], char ArquivoComprimido[])
 {
     FILE* arqComprimido=NULL;
     FILE* arqDescomprimido = NULL;
@@ -785,8 +785,8 @@ bool CompressorHuffmanAntigo::compress(){
 	CompressFile(nomeArquivoEntrada, nomeArquivoSaida);
 	return true;
 }
-bool CompressorHuffmanAntigo::descompress(){
-	DescompressFile(nomeArquivoSaida, nomeArquivoEntrada);
+bool CompressorHuffmanAntigo::decompress(){
+	DecompressFile(nomeArquivoSaida, nomeArquivoEntrada);
 	return true;
 }
 

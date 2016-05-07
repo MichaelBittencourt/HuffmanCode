@@ -26,13 +26,15 @@ int main(int argc, char *args[])
 				
         if(strcmp(args[1], "-c")==0)
         {
-			compressor->compress();//				CompressFile(args[2], args[3]);//comprimir arquivo
+        	// to compress file CompressFile(args[2], args[3]) 	 	
+			compressor->compress();
         }
         else
         {
             if(strcmp(args[1], "-x")==0)
             {
-                 compressor->descompress(); //DescompressFile(args[3],args[2]);//descomprimir arquivo
+            	// to decompress file DecompressFile(args[3],args[2])
+                 compressor->decompress();
             }
             else
             {
@@ -40,7 +42,6 @@ int main(int argc, char *args[])
                 exit(1);
             }
         }
-//		delete compressor;
     }
     return EXIT_SUCCESS;
 }

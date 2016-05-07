@@ -42,7 +42,7 @@ unsigned char * divideTableVector(unsigned char ** table, int numNodeTree, int t
 void tabelaToTree(unsigned char ** table, Node ** huffmanTree, int numNodeTree, int typeNodeTree);
 void convertCode(FILE * arquivoDescomprimido, unsigned char ** tabela, char *nomeArquivoComprimido, int qtdTiposCaracter, int numNodeTree);
 void CompressFile(char * nomeArquivoDescomprimido, char nomeArquivoComprimido[]);
-void DescompressFile(char ArquivoDescomprimido[], char ArquivoComprimido[]);
+void DecompressFile(char ArquivoDescomprimido[], char ArquivoComprimido[]);
 
 void FreeHuffmanTree(Node ** arvore);
 void FreeListValue(ListaDENode ** lista);
@@ -77,7 +77,7 @@ int main(int argc, char *args[])
         {
             if(strcmp(args[1], "-x")==0)
             {
-                 DescompressFile(args[3],args[2]);//descomprimir arquivo
+                 DecompressFile(args[3],args[2]);//descomprimir arquivo
             }
             else
             {
@@ -612,7 +612,7 @@ void CompressFile(char * nomeArquivoDescomprimido, char nomeArquivoComprimido[])
     printf("\nFree tabela\n");
 
 }
-void DescompressFile(char ArquivoDescomprimido[], char ArquivoComprimido[])
+void DecompressFile(char ArquivoDescomprimido[], char ArquivoComprimido[])
 {
     FILE* arqComprimido=NULL;
     FILE* arqDescomprimido = NULL;

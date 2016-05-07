@@ -20,7 +20,7 @@ bool CompressorHuffman::compress(){
 	return true;
 }
 
-bool CompressorHuffman::descompress(){
+bool CompressorHuffman::decompress(){
 	cout << "Descomprimindo = " << dados.getCountByte('a') << " fim" << endl;
 	return true;
 }

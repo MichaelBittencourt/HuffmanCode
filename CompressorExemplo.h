@@ -19,7 +19,7 @@ class CompressorExemplo : public CompressorIF{
 		void setDados(DadosCompressorIF & dados);
 		DadosCompressorIF & getDados();
 		bool compress();
-		bool descompress();
+		bool decompress();
 		
 		~CompressorExemplo();
 };

@@ -4,12 +4,14 @@
 class CompressorIF{
 	public:
 		CompressorIF(){
+		// empty
 		}
 		
 		virtual bool compress() = 0;
-		virtual bool descompress() = 0;
+		virtual bool decompress() = 0;
 		
 		~CompressorIF(){
+		// empty
 		}
 
 };

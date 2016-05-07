@@ -51,7 +51,7 @@ class CompressorHuffmanAntigo : public CompressorIF{
 		void tabelaToTree(unsigned char ** table, Node ** huffmanTree, int numNodeTree, int typeNodeTree);
 		void convertCode(FILE * arquivoDescomprimido, unsigned char ** tabela, char *nomeArquivoComprimido, int qtdTiposCaracter, int numNodeTree, char * extencaoArquivoDescomprimido);
 		void CompressFile(char * nomeArquivoDescomprimido, char nomeArquivoComprimido[]);
-		void DescompressFile(char ArquivoDescomprimido[], char ArquivoComprimido[]);
+		void DecompressFile(char ArquivoDescomprimido[], char ArquivoComprimido[]);
 
 		void FreeHuffmanTree(Node ** arvore);
 		void FreeListValue(ListaDENode ** lista);
@@ -76,7 +76,7 @@ class CompressorHuffmanAntigo : public CompressorIF{
 		void setNomeArquivoSaida(char * nomeArquivoSaida);
 		char * getNomeArquivoSaida();
 		bool compress();
-		bool descompress();
+		bool decompress();
 		
 		~CompressorHuffmanAntigo();
 };

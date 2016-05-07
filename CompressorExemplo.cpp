@@ -4,11 +4,11 @@
 
 }*/
 
-CompressorExemplo::CompressorExemplo(DadosCompressorIF & d) : dados(d){
+CompressorExemplo::CompressorExemplo(DadosCompressorIF &d) : dados(d) {
 	//this->dados = dados;
 }
 
-void CompressorExemplo::setDados(DadosCompressorIF & dados){
+void CompressorExemplo::setDados(DadosCompressorIF &dados){
 	this->dados = dados;
 }
 DadosCompressorIF & CompressorExemplo::getDados(){
@@ -20,7 +20,7 @@ bool CompressorExemplo::compress(){
 	return true;
 }
 
-bool CompressorExemplo::descompress(){
+bool CompressorExemplo::decompress(){
 	cout << "Descomprimindo = " << dados.getCountByte('a') << " fim" << endl;
 	return true;
 }
