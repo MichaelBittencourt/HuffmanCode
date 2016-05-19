@@ -7,10 +7,10 @@ class CompressorIF{
 		// empty
 		}
 		
-		virtual bool compress() = 0;
-		virtual bool decompress() = 0;
+		virtual bool compress() = 0;  // Abstract method
+		virtual bool decompress() = 0; // Abstract method
 		
-		~CompressorIF(){
+		virtual ~CompressorIF(){
 		// empty
 		}
 

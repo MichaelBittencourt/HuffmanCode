@@ -26,5 +26,6 @@ bool CompressorExemplo::decompress(){
 }
 		
 CompressorExemplo::~CompressorExemplo(){
+	delete &dados;
 	cout << "Destruindo Compressor" << endl;
 }

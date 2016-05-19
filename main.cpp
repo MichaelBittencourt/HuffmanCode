@@ -1,28 +1,29 @@
-#include<stdio.h>
-#include<stdlib.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <iostream>
 #include "CompressorIF.h"
 #include "CompressorHuffmanAntigo.h"
 #include "CompressorHuffman.h"
 #include "CompressorExemplo.h"
 #include "DadosTest.h"
 
+using namespace std;
+
 int main(int argc, char *args[])
 {
-	if(argc == 1){
-		//system("start cmd");
-		exit(0);
-	}
-    if(argc != 4)
+	if(argc != 4)
     {
         printf("\nParametros invalidos\n");
         exit(1);
     }
     else
     {
+    	/***************For this compressor ******************/
 		CompressorIF * compressor =  new CompressorHuffmanAntigo(args[2], args[3]);
 		//DadosTest d;
 		//DadosCompressorIF & dados(d);// = new DadosTest();		
 		//CompressorIF * compressor =  new CompressorExemplo(*(new DadosTest()));
+    	/***************For this compressor ******************/
 				
         if(strcmp(args[1], "-c")==0)
         {
@@ -42,6 +43,7 @@ int main(int argc, char *args[])
                 exit(1);
             }
         }
+		delete compressor;
     }
     return EXIT_SUCCESS;
 }

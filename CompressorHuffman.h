@@ -7,17 +7,17 @@
 
 using namespace std;
 
-class CompressorHuffman : public CompressorIF{
+class CompressorHuffman /*: public CompressorIF*/{
 	
 	protected:
 		DadosCompressorIF & dados;
 	
 	public:
 		//CompressorHuffman();
-		CompressorHuffman(DadosCompressorIF & d);
+		CompressorHuffman(DadosCompressorIF &d);
 		
-		void setDados(DadosCompressorIF & dados);
-		DadosCompressorIF & getDados();
+		void setDados(DadosCompressorIF &dados);
+		DadosCompressorIF& getDados();
 		bool compress();
 		bool decompress();
 		
