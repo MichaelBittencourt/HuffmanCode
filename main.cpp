@@ -4,8 +4,27 @@
 #include "CompressorIF.h"
 #include "CompressorHuffmanAntigo.h"
 #include "CompressorHuffman.h"
-#include "CompressorExemplo.h"
-#include "DadosTest.h"
+#include "File.h"
+
+#define DEBUG
+
+#ifdef DEBUG
+
+int main(){
+
+	File file("test.txt");
+	
+	unsigned long* array_frequency = file.getArrayFrequency();
+
+
+	for(int i = 0; i < 256; i++){
+		std::cout << array_frequency[i] << std::endl;
+	}
+	
+	return 0;
+}
+
+#else
 
 using namespace std;
 
@@ -47,3 +66,4 @@ int main(int argc, char *args[])
     }
     return EXIT_SUCCESS;
 }
+#endif
