@@ -2,7 +2,24 @@
 
 
 File::File(const char* filename){
-	this->filename = filename;
+	unsigned int i = 0;
+	
+	for (; filename[i] != '.' && filename[i] != '\0'; i++);
+	
+	if(filename[i] == '\0'){
+		// error ... is not a valid file
+	}
+	else{
+		this->filename = new char[i];
+		for(unsigned k = 0; k < i; k++)
+			this->filename[k] = filename[k];
+		this->ext = new char[std::strlen(filename) - i];
+		for(unsigned int k = 0; strlen(filename) - i; k++)
+			this->ext[k] = filename[i++];		
+	
+	}
+	std::cout << "Filename: " << this->filename << std::endl;
+	std::cout << "Extension: " << this->ext << std::endl;
 }
 
 unsigned int File::getCountByte(char byte){
@@ -19,7 +36,7 @@ unsigned int File::read(unsigned char * buffer, const unsigned int size){
 	return 0;
 }
 
-File::~DadosCompressorIF(){
+File::~File(){
 	if(frequency) 
 		delete [] frequency;
 	if(filename)
@@ -27,6 +44,9 @@ File::~DadosCompressorIF(){
 }
 
 unsigned long* File::getArrayFrequency(){
+	
+	std::string filename(this->filename);
+	filename.append(this->ext);
 
 	frequency = new unsigned long[256];
 	unsigned long read_bytes = 0;
@@ -39,8 +59,12 @@ unsigned long* File::getArrayFrequency(){
 	}
 
 	// Open file
-	std::FILE * file_pointer = std::fopen(filename, "rb");	
-	
+	std::FILE * file_pointer = std::fopen(&filename[0], "rb");
+		
+	if(file_pointer == nullptr){
+		std::cout << "File not find! " << std::endl;
+		return nullptr;
+	}
 	
 	while(!feof(file_pointer)){
 		if(file_pointer){

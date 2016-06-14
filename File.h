@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cstdio>
+#include <cstring>
 #include "DadosCompressorIF.h"
 #define BUFFER_SIZE 256 // 10000384
 
@@ -14,8 +15,9 @@ public:
 	void operator = (DadosCompressorIF & copia);
 	unsigned char getPadding();
 	unsigned int read(unsigned char * buffer, const unsigned int size);
-	~DadosCompressorIF();
+	~File();
 private:
 	unsigned long* frequency = nullptr;
-	const char* filename = nullptr;
+	char* filename = nullptr;
+	char* ext = nullptr;
 };

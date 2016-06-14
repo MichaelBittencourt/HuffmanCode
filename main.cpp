@@ -17,7 +17,7 @@ int main(){
 	unsigned long* array_frequency = file.getArrayFrequency();
 
 
-	for(int i = 0; i < 256; i++){
+	for(int i = 0; array_frequency != nullptr && i < 256; i++){
 		std::cout << array_frequency[i] << std::endl;
 	}
 	

@@ -1,7 +1,7 @@
 SRC = $(wildcard *.cpp)
 HEADER = $(wildcard *.h)
 GCC = g++
-FLAGS = -Wall -Werror -pedantic
+FLAGS = -Wall -Werror -pedantic -std=c++11
 OTIMIZADOR = -O0
 ASSEMBLER_FLAGS = -S -fno-asynchronous-unwind-tables
 
