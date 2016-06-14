@@ -4,6 +4,59 @@
 
 }*/
 
+/*****************************************Protected function*********************************************/
+
+void CompressorHuffman::vectorForHeap(){
+	unsigned long * vector = dados.getArrayFrequency();
+	for(int i = 0; i < 256; i++){
+		if(vector[i] != 0){
+			std::cout << "v[" << (char)i << "] = " << vector[i] << std::endl;
+			minHeap.push(FrequencyData(i, vector[i]));
+		}
+	}
+}
+
+
+FrequencyData * CompressorHuffman::BuildHuffmanTree()
+{
+    FrequencyData * menor1;
+    FrequencyData * menor2;
+    FrequencyData * temp = nullptr;
+//    InsertionSort_L(lista);
+    //inOrderList_L(lista);
+	while (true) {
+		//cout << minHeap.top() << " ";
+		menor1 = (FrequencyData *)(&(minHeap.top()));
+		std::cout << "(" << minHeap.top().getByte() << ", " << minHeap.top().getFrequency() << ")" << std::endl;
+//		std::cout << "(" << menor1->getByte() << ", " << menor1->getFrequency() << ")" << std::endl;
+		minHeap.pop();
+		std::cout << "(" << menor1->getByte() << ", " << menor1->getFrequency() << ")" << std::endl;
+		if(!minHeap.empty()){
+			break;
+		}
+		menor2 = (FrequencyData *)(&(minHeap.top()));
+		minHeap.pop();
+		temp = new FrequencyData(0, menor1->getFrequency()+menor2->getFrequency());
+		menor1->setParent(temp);
+		menor2->setParent(temp);
+		temp->setLeft(menor1);
+		temp->setRight(menor2);
+		minHeap.push(*temp);
+	}
+
+	return menor1;
+}
+
+void CompressorHuffman::printHuffmanTree(FrequencyData * treeHuffman){
+	if(treeHuffman != nullptr){
+		printHuffmanTree(treeHuffman->getLeft());
+		printHuffmanTree(treeHuffman->getLeft());
+		std::cout << "(" << treeHuffman->getByte() << ", " << treeHuffman->getFrequency() << ")" << std::endl;
+	}
+}
+
+/***************************************End Protected function********************************************/
+
 CompressorHuffman::CompressorHuffman(DadosCompressorIF & d) : dados(d){
 	//this->dados = dados;
 }
@@ -16,7 +69,12 @@ DadosCompressorIF & CompressorHuffman::getDados(){
 }
 
 bool CompressorHuffman::compress(){
-	cout << "Comprimindo = " << dados.getCountByte('a') << " fim" << endl;
+	cout << "Comprimindo " << endl;
+	vectorForHeap();
+	FrequencyData * treeHuffman = nullptr;
+	treeHuffman = BuildHuffmanTree();
+	printHuffmanTree(treeHuffman);
+	cout << "Raiz da Arvore = " << treeHuffman << endl;
 	return true;
 }
 

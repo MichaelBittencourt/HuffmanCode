@@ -6,13 +6,20 @@
 #include "CompressorHuffman.h"
 #include "File.h"
 
-#define DEBUG
+//#define DEBUG
 
 #ifdef DEBUG
 
 int main(){
 
-	/* For Tests */
+	File file("test.txt");
+	
+	unsigned long* array_frequency = file.getArrayFrequency();
+
+
+	for(int i = 0; i < 256; i++){
+		std::cout << array_frequency[i] << std::endl;
+	}
 	
 	return 0;
 }
@@ -31,10 +38,11 @@ int main(int argc, char *args[])
     else
     {
     	/***************For this compressor ******************/
-		CompressorIF * compressor =  new CompressorHuffmanAntigo(args[2], args[3]);
+		//CompressorIF * compressor =  new CompressorHuffmanAntigo(args[2], args[3]);
 		//DadosTest d;
 		//DadosCompressorIF & dados(d);// = new DadosTest();		
 		//CompressorIF * compressor =  new CompressorExemplo(*(new DadosTest()));
+		CompressorIF * compressor =  new CompressorHuffman(*(new File(args[2])));
     	/***************For this compressor ******************/
 				
         if(strcmp(args[1], "-c")==0)

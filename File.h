@@ -1,6 +1,5 @@
 #include <iostream>
-#include <cstdio>
-#include <cstring>
+#include <stdio.h>
 #include "DadosCompressorIF.h"
 #define BUFFER_SIZE 256 // 10000384
 
@@ -18,6 +17,5 @@ public:
 	~File();
 private:
 	unsigned long* frequency = nullptr;
-	char* filename = nullptr;
-	char* ext = nullptr;
+	const char* filename = nullptr;
 };
