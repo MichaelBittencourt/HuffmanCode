@@ -91,7 +91,7 @@ void CompressorHuffman::printHuffmanTree(FrequencyData * treeHuffman, int qtdEsp
 			std::cout  << deslocamento << "Nivel = " << qtdEspacos << "\n" << deslocamento << "parent = " << treeHuffman->getParent() <<"\n" << deslocamento << "(" << byte << ", " << treeHuffman->getFrequency() << ") = "<< treeHuffman << "\n"  << deslocamento << "left = " << treeHuffman->getLeft() << "right = " << treeHuffman->getRight() << std::endl;
 		printHuffmanTree(treeHuffman->getLeft(), qtdEspacos+1, simpleExibition);
 		//getchar();
-		printHuffmanTree(treeHuffman->getRight(),qtdEspacos+1, simpleExibition);
+		printHuffmanTree(treeHuffman->getRight(), qtdEspacos+1, simpleExibition);
 	}
 }
 
