@@ -25,11 +25,12 @@ int main(){
 }
 
 #else
-
 using namespace std;
 
 int main(int argc, char *args[])
 {
+
+	
 	if(argc != 4)
     {
         printf("\nParametros invalidos\n");
