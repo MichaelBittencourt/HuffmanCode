@@ -73,9 +73,16 @@ class CompressorHuffman : public CompressorIF{
 
 		DadosCompressorIF & dados;
 		priority_queue<FrequencyData *, std::vector<FrequencyData *>, comparatorLong> minHeap;
-		void vectorForHeap();
+		int vectorForHeap();
 		FrequencyData * BuildHuffmanTree();
 		void printHuffmanTree(FrequencyData * treeHuffman, int qtdEspacos, bool simpleExibition);
+		int qtdNode(FrequencyData * arvore, int qtdNodeA);
+		int qtdNodeTree(FrequencyData * arvore);
+		unsigned char ** tableTree(FrequencyData * arvore, int numNodeTree, int typeNodeTree);
+		int achaFolha(unsigned char ** table, FrequencyData * arvore, int posFolha, int numNodeTree);
+		void invertTable(unsigned char ** table, int numNodeTree, int typeNodeTree);
+		unsigned char * divideTableVector(unsigned char ** table, int numNodeTree, int typeNodeTree);
+		
 	
 	public:
 		//CompressorHuffman();
