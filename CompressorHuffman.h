@@ -10,8 +10,8 @@
 using namespace std;
 
 struct comparatorLong{
-	bool operator ()(unsigned long i, unsigned long j){
-		return i > j;
+	bool operator ()(FrequencyData i, FrequencyData j){
+		return i.getFrequency() > j.getFrequency();
 	}
 };
 

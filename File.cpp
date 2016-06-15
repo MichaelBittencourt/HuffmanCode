@@ -58,7 +58,7 @@ unsigned int File::getCountByte(char byte){
 
 unsigned char File::getPadding(){
 	std::string filename(this->filename);
-	filename.append(".txt");
+	filename.append(this->ext);
 	unsigned char padding = '0';
 	
 	// Open file
@@ -128,7 +128,7 @@ unsigned long* File::getArrayFrequency(){
 
 void File::write(const unsigned char * ArrayDados, const unsigned int size){
 	std::string filename(this->filename);
-	filename.append(".hx2");
+	filename.append(this->ext);
 	
 	std::FILE *file_pointer = std::fopen(&filename[0], "w");
 	if(file_pointer == nullptr){

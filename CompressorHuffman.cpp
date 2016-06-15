@@ -11,8 +11,18 @@ void CompressorHuffman::vectorForHeap(){
 	for(int i = 0; i < 256; i++){
 		if(vector[i] != 0){
 			std::cout << "v[" << (char)i << "] = " << vector[i] << std::endl;
-			minHeap.push(FrequencyData(i, vector[i]));
+			minHeap.push(*(new FrequencyData(i, vector[i])));
+/*			int size = minHeap.size();
+			for(int j = 0; j < size; j++){
+				std::cout << "(" << minHeap.top().getByte() << ", " << minHeap.top().getFrequency() << ")" << std::endl;
+				minHeap.pop();
+			}*/
 		}
+	}
+	int size = minHeap.size();
+	for(int j = 0; j < size; j++){
+		std::cout << "(" << minHeap.top().getByte() << ", " << minHeap.top().getFrequency() << ")" << std::endl;
+		minHeap.pop();
 	}
 }
 
@@ -26,15 +36,16 @@ FrequencyData * CompressorHuffman::BuildHuffmanTree()
     //inOrderList_L(lista);
 	while (true) {
 		//cout << minHeap.top() << " ";
-		menor1 = (FrequencyData *)(&(minHeap.top()));
+		menor1 = new FrequencyData(minHeap.top().getByte(), minHeap.top().getFrequency());
 		std::cout << "(" << minHeap.top().getByte() << ", " << minHeap.top().getFrequency() << ")" << std::endl;
 //		std::cout << "(" << menor1->getByte() << ", " << menor1->getFrequency() << ")" << std::endl;
 		minHeap.pop();
-		std::cout << "(" << menor1->getByte() << ", " << menor1->getFrequency() << ")" << std::endl;
+		//std::cout << "(" << menor1->getByte() << ", " << menor1->getFrequency() << ")" << std::endl;
+		getchar();
 		if(!minHeap.empty()){
 			break;
 		}
-		menor2 = (FrequencyData *)(&(minHeap.top()));
+		menor2 = new FrequencyData(minHeap.top().getByte(), minHeap.top().getFrequency());
 		minHeap.pop();
 		temp = new FrequencyData(0, menor1->getFrequency()+menor2->getFrequency());
 		menor1->setParent(temp);
@@ -50,7 +61,7 @@ FrequencyData * CompressorHuffman::BuildHuffmanTree()
 void CompressorHuffman::printHuffmanTree(FrequencyData * treeHuffman){
 	if(treeHuffman != nullptr){
 		printHuffmanTree(treeHuffman->getLeft());
-		printHuffmanTree(treeHuffman->getLeft());
+		printHuffmanTree(treeHuffman->getRight());
 		std::cout << "(" << treeHuffman->getByte() << ", " << treeHuffman->getFrequency() << ")" << std::endl;
 	}
 }
