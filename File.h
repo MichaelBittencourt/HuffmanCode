@@ -20,7 +20,7 @@ public:
 	unsigned int read(unsigned int * buffer, const unsigned int size);
 	bool setOpenFile(bool for_read, bool append);
 	bool setCloseFile();
-	char getExt() const;
+	char* getExt() const;
 	~File();
 private:
 	unsigned long* frequency = nullptr;

@@ -142,8 +142,8 @@ unsigned long* File::getArrayFrequency(){
 	return frequency;
 }
 
-char File::getExt() const {
-	return (*this->ext);
+char* File::getExt() const {
+	return this->ext;
 }
 
 void File::write(const unsigned char *ArrayDados, const unsigned int size){
