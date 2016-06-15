@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <queue>
+#include <string>
 #include "CompressorIF.h"
 #include "DadosCompressorIF.h"
 #include "FrequencyData.h"
@@ -10,8 +11,8 @@
 using namespace std;
 
 struct comparatorLong{
-	bool operator ()(FrequencyData i, FrequencyData j){
-		return i.getFrequency() > j.getFrequency();
+	bool operator ()(FrequencyData * i, FrequencyData * j){
+		return i->getFrequency() > j->getFrequency();
 	}
 };
 
@@ -71,10 +72,10 @@ class CompressorHuffman : public CompressorIF{
 	protected:
 
 		DadosCompressorIF & dados;
-		priority_queue<FrequencyData, std::vector<FrequencyData>, comparatorLong> minHeap;
+		priority_queue<FrequencyData *, std::vector<FrequencyData *>, comparatorLong> minHeap;
 		void vectorForHeap();
 		FrequencyData * BuildHuffmanTree();
-		void printHuffmanTree(FrequencyData * treeHuffman);
+		void printHuffmanTree(FrequencyData * treeHuffman, int qtdEspacos, bool simpleExibition);
 	
 	public:
 		//CompressorHuffman();

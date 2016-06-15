@@ -15,18 +15,19 @@ class FrequencyData{
 
 		FrequencyData();
 		FrequencyData(unsigned char byte, unsigned long frequency);
+		FrequencyData(unsigned char byte, unsigned long frequency, FrequencyData * parent, FrequencyData * left, FrequencyData * right);
 		FrequencyData(unsigned char byte);
-//		FrequencyData(FrequencyData & fd);
+//		FrequencyData(FrequencyData fd);
 //		FrequencyData(FrequencyData & data1, FrequencyData & data2);
 		void setByte(const unsigned char byte);
 		unsigned char getByte() const;
 		void setFrequency(const unsigned long frequency);
 		unsigned long getFrequency() const;
-		void setParent(FrequencyData* & parent);
+		void setParent(FrequencyData * & parent);
 		FrequencyData * getParent() const;
-		void setLeft(FrequencyData* & left);
+		void setLeft(FrequencyData * & left);
 		FrequencyData * getLeft() const;
-		void setRight(FrequencyData* & right);
+		void setRight(FrequencyData * & right);
 		FrequencyData * getRight() const;
 
 		operator int();
