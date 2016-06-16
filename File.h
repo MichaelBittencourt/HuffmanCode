@@ -20,6 +20,8 @@ public:
 	unsigned int read(unsigned int * buffer, const unsigned int size);
 	bool setOpenFile(bool for_read, bool append);
 	bool setCloseFile();
+	unsigned char* intToChar(unsigned int n);
+	unsigned int charToInt(unsigned char byte[4]);
 	char* getExt() const;
 	~File();
 private:

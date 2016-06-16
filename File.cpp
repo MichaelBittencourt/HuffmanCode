@@ -56,6 +56,23 @@ unsigned int File::getCountByte(char byte){
 	return frequency;
 }
 
+unsigned char* File::intToChar(unsigned int n){
+	unsigned char *bytes = new unsigned char(4);
+	bytes[0] = (n >> 24) & 0xFF;
+	bytes[1] = (n >> 16) & 0xFF;
+	bytes[2] = (n >> 8) & 0xFF;
+	bytes[3] = n & 0xFF;
+	return bytes;
+}
+
+unsigned int File::charToInt(unsigned char byte[4]){
+	unsigned int num;
+	num = (byte[0] << 24) + (byte[1] << 16) + (byte[2] << 8) + byte[3];
+	return num;
+}
+
+
+
 unsigned char File::getPadding(){
 	std::string filename(this->filename);
 	filename.append(this->ext);
