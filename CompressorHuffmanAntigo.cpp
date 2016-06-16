@@ -397,6 +397,9 @@ void CompressorHuffmanAntigo::convertCode(FILE * arquivoDescomprimido, unsigned 
 {
     int i = 0, j = 0;
 	int contCaracterNome = 0;
+	char vetorDeBytes[SIZE_VECTOR_BYTES];
+	int posVetorDeBytes = 0;
+	
 	for(i = 0; nomeArquivoComprimido[i] != '\0'; i++){
 		contCaracterNome++;
 	}
@@ -456,7 +459,14 @@ void CompressorHuffmanAntigo::convertCode(FILE * arquivoDescomprimido, unsigned 
                         else
                         {
                             gravaArquivo = bintoASCII(binario);//aqui converto os '1' e '0' em sequencia no código binario correspondente
-                            fprintf(arquivoComprimido, "%c", gravaArquivo);// aqui estou gravando o dado convertido para byte
+							/* Trecho adicionei para enviar com rajada*/
+							vetorDeBytes[posVetorDeBytes] = gravaArquivo;
+							posVetorDeBytes = (posVetorDeBytes+1)%SIZE_VECTOR_BYTES;//quando estourar ele retorna 0 para posVectorDeBytes, então posso gravar
+							if(posVetorDeBytes == 0){
+								fwrite(vetorDeBytes, sizeof(unsigned char), SIZE_VECTOR_BYTES, arquivoComprimido);
+							}
+              				/* Fim trecho para enviar com rajada */
+							//fprintf(arquivoComprimido, "%c", gravaArquivo);// aqui estou gravando o dado convertido para byte
                             contBin = 0;//está sendo zerado para iniciar outro byte, ele é posto igual a zero apenas quando grava no arquivo
                         }
                     }
@@ -474,7 +484,9 @@ void CompressorHuffmanAntigo::convertCode(FILE * arquivoDescomprimido, unsigned 
             binario[i] = 0;
         }
         gravaArquivo = bintoASCII(binario);// converto o ultimo Byte junto com o padding
-        fprintf(arquivoComprimido, "%c", gravaArquivo);//salvando esse byte
+		vetorDeBytes[posVetorDeBytes] = gravaArquivo; 
+		fwrite(vetorDeBytes, sizeof(unsigned char), posVetorDeBytes+1, arquivoComprimido);
+//        fprintf(arquivoComprimido, "%c", gravaArquivo);//salvando esse byte
     }
     //agora preciso salvar quantos digitos de padding foi inserido no arquivo ou seja 8-contBin
     fprintf(arquivoComprimido, "%d", 8-contBin);//estou fazendo com %c pra ver se fica mais otimizado com menos espaço, mais pode dar mais certo com %d

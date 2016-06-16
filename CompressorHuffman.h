@@ -4,9 +4,11 @@
 #include <iostream>
 #include <queue>
 #include <string>
+#include <string.h>
 #include "CompressorIF.h"
 #include "DadosCompressorIF.h"
 #include "FrequencyData.h"
+#define SIZE_VECTOR_BYTES 1000384
 
 using namespace std;
 
@@ -82,6 +84,21 @@ class CompressorHuffman : public CompressorIF{
 		int achaFolha(unsigned char ** table, FrequencyData * arvore, int posFolha, int numNodeTree);
 		void invertTable(unsigned char ** table, int numNodeTree, int typeNodeTree);
 		unsigned char * divideTableVector(unsigned char ** table, int numNodeTree, int typeNodeTree);
+/*		void convertCode(FILE * arquivoDescomprimido, unsigned char ** tabela, char *nomeArquivoComprimido, int qtdTiposCaracter, int numNodeTree, char * extencaoArquivoDescomprimido);
+
+		void FreeHuffmanTree(Node ** arvore);
+		void FreeListValue(ListaDENode ** lista);
+		void FreeTableBytes(unsigned char *** tabela, int qtdTiposCaracter);
+
+		//funções para manipulação de Binarios e ASCII
+		char bintoASCII(char binario[8]);
+		void ascIItoBin(unsigned char let, char bin[8]);
+		int imprimeBIN(char t[9]);
+		char * toStringBin(char t[9]);
+
+		char * getExtencaoArquivo(char * nomeArquivo);
+
+*/
 		
 	
 	public:

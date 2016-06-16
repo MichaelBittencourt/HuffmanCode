@@ -246,6 +246,107 @@ unsigned char * CompressorHuffman::divideTableVector(unsigned char ** table, int
     return Vector;
 }
 
+/*void CompressorHuffman::convertCode(FILE * arquivoDescomprimido, unsigned char ** tabela, char *nomeArquivoComprimido, int qtdTiposCaracter, int numNodeTree, char * extencaoArquivoDescomprimido)
+{
+    int i = 0, j = 0;
+	int contCaracterNome = 0;
+	char vetorDeBytes[SIZE_VECTOR_BYTES];
+	int posVetorDeBytes = 0;
+	
+	for(i = 0; nomeArquivoComprimido[i] != '\0'; i++){
+		contCaracterNome++;
+	}
+	char * novoNome = (char*)malloc(sizeof(char)*(contCaracterNome+TAM_MAX_EXTENCAO));
+	strcpy(novoNome, nomeArquivoComprimido);
+    strcat(novoNome, ".hx2");
+	
+	FILE * arquivoComprimido = NULL;
+	
+    if((arquivoComprimido = fopen(novoNome, "w+b")) == NULL)
+    {
+        printf("\nNao foi possivel criar o arquivo %s", novoNome);
+    }
+	free(novoNome);
+    
+	fseek(arquivoComprimido, 0, SEEK_SET);
+	fprintf(arquivoComprimido, "%s", extencaoArquivoDescomprimido);
+	fprintf(arquivoComprimido,"%c",'\0');
+    fprintf(arquivoComprimido, "%d", qtdTiposCaracter);
+    fprintf(arquivoComprimido,"%c",'\0');
+    fprintf(arquivoComprimido, "%d", numNodeTree);
+    fprintf(arquivoComprimido,"%c",'\0');
+
+    for(i = 0; i < qtdTiposCaracter; i++)
+    {
+        for(j = 0; j==0 || tabela[i][j] != '\0'; j++)
+        {
+            fprintf(arquivoComprimido, "%c", tabela[i][j]);
+        }
+
+        fprintf(arquivoComprimido, "%c", tabela[i][j]);
+    }
+
+    unsigned char c;// recebe o byte lido do arquivo descomprimido
+    char binario[8];// vai conter o código bit a bit
+    int contBin = 0;// conta em qual bit está o código
+    unsigned char gravaArquivo; //variável que vai receber o valor em ASCII equivalente do código de binário[8]
+    fseek(arquivoDescomprimido, 0, SEEK_SET);
+    while(!feof(arquivoDescomprimido))
+    {
+        fscanf(arquivoDescomprimido, "%c", &c);
+        if(!feof(arquivoDescomprimido)) // isso é pq se chegar no EOF significa que não é pra gravar o c por assim estaria gravando o EOF e na hora que for descomprimir e criar um novo arquivo ele terá dois EOF, o que não pode
+        {
+            for(i = 0; i < qtdTiposCaracter; i++)
+            {
+                if(tabela[i][0] == c)
+                {
+                    j = 1;
+                    while(tabela[i][j] != '\0') //para gravar está aqui dentro por que ele só gravara o conteudo que ler na tabela
+                    {
+                        if(contBin < 8) // quando contBin atinngir 8 implica que completou o byte e tem de converter e salvar no arquivo
+                        {
+                            binario[contBin] = tabela[i][j];//pego a sequencia contida na tabela até atingir o fim da string ou atingir o limite do byte
+                            contBin++;
+                            j++; //cada vez q salvo o codigo correspondente do caminho no binário, eu devo verificar o que tem na próxima posição da tabela
+                        }
+                        else
+                        {
+                            gravaArquivo = bintoASCII(binario);//aqui converto os '1' e '0' em sequencia no código binario correspondente
+							// Trecho adicionei para enviar com rajada
+							vetorDeBytes[posVetorDeBytes] = gravaArquivo;
+							posVetorDeBytes = (posVetorDeBytes+1)%SIZE_VECTOR_BYTES;//quando estourar ele retorna 0 para posVectorDeBytes, então posso gravar
+							if(posVetorDeBytes == 0){
+								fwrite(vetorDeBytes, sizeof(unsigned char), SIZE_VECTOR_BYTES, arquivoComprimido);
+							}
+              				// Fim trecho para enviar com rajada 
+							//fprintf(arquivoComprimido, "%c", gravaArquivo);// aqui estou gravando o dado convertido para byte
+                            contBin = 0;//está sendo zerado para iniciar outro byte, ele é posto igual a zero apenas quando grava no arquivo
+                        }
+                    }
+                    break;//ele faz o for até achar o 'c' equivalente na tabela, quando ele encontra pode encerrar o for para ler novamente outro caracter
+                }
+            }
+        }
+    }
+    //se contBin = 4 então faltam 4 espaços para completar 1byte, pois foi inserido o 3 e em seguida foi incrementado o 4, ou seja o 4 não foi inserido,
+    //se for igual a 2 então faltam 6 ou seja serão completado 8-contBin espaços
+    if(contBin != 0)
+    {
+        for(i = contBin; i < 8; i++)
+        {
+            binario[i] = 0;
+        }
+        gravaArquivo = bintoASCII(binario);// converto o ultimo Byte junto com o padding
+		vetorDeBytes[posVetorDeBytes] = gravaArquivo; 
+		fwrite(vetorDeBytes, sizeof(unsigned char), posVetorDeBytes+1, arquivoComprimido);
+//        fprintf(arquivoComprimido, "%c", gravaArquivo);//salvando esse byte
+    }
+    //agora preciso salvar quantos digitos de padding foi inserido no arquivo ou seja 8-contBin
+    fprintf(arquivoComprimido, "%d", 8-contBin);//estou fazendo com %c pra ver se fica mais otimizado com menos espaço, mais pode dar mais certo com %d
+    fclose(arquivoComprimido);
+}
+*/
+
 
 /***************************************End Protected function********************************************/
 

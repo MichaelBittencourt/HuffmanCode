@@ -6,6 +6,7 @@
 #include<string.h>
 #include<math.h>
 #include "CompressorIF.h"
+#define SIZE_VECTOR_BYTES 1000384
 
 #define TAM_MAX_EXTENCAO 10
 
