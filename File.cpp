@@ -163,6 +163,11 @@ char* File::getExt() const {
 	return this->ext;
 }
 
+char* File::getFilename() const{
+	return this->filename;
+
+}
+
 void File::write(const unsigned char *ArrayDados, const unsigned int size){
 	std::string filename(this->filename);
 	filename.append(this->ext);

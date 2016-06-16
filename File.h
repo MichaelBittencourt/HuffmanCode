@@ -23,6 +23,7 @@ public:
 	unsigned char* intToChar(unsigned int n);
 	unsigned int charToInt(unsigned char byte[4]);
 	char* getExt() const;
+	char* getFilename() const;
 	~File();
 private:
 	unsigned long* frequency = nullptr;
