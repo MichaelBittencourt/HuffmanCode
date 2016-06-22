@@ -1,5 +1,6 @@
 #ifndef FREQUENCY_DATA_H
 #define FREQUENCY_DATA_H
+#include <iostream>
 
 class FrequencyData{
 	
@@ -33,6 +34,8 @@ class FrequencyData{
 		operator int();
 		
 		void operator = (const FrequencyData & fd);
+
+		~FrequencyData();
 		
 };
 

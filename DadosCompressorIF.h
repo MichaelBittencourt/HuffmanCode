@@ -20,6 +20,14 @@ class DadosCompressorIF{
 		virtual void write(const unsigned int *ArrayDados, const unsigned int size) = 0;
 		virtual void setTypeAction(const bool typeAction) = 0;
 		virtual void operator = (DadosCompressorIF & copia) = 0;//colocar const eu acho. Não sei se devo colocar aqui
+		virtual bool setOpenFile(bool for_read, bool append) = 0;
+		virtual bool setCloseFile() = 0;
+		virtual unsigned char* intToChar(unsigned int n) = 0;
+		virtual unsigned int charToInt(unsigned char byte[4]) = 0;
+		virtual char* getExt() = 0;
+		virtual char* getFilename() = 0;
+		virtual	unsigned int getBufferSize() = 0;
+		virtual bool getFileIsOpen() = 0;
 		virtual ~DadosCompressorIF(){
 		// empty
 		}

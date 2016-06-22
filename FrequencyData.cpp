@@ -93,3 +93,14 @@ void FrequencyData::operator = (const FrequencyData & fd){
 	right_m = fd.right_m;
 //	return *this;
 }
+
+FrequencyData::~FrequencyData(){
+	if(left_m != nullptr){
+		std::cout << "my pointer = " << std::hex << this << " deletando left = " << std::hex << this->left_m << std::endl;
+		delete left_m;
+	}
+	if(right_m != nullptr){
+		std::cout << "my pointer = " << std::hex << this << " deletando right = " << std::hex << this->right_m << std::endl;
+		delete right_m;
+	}
+}

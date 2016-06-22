@@ -246,13 +246,41 @@ unsigned char * CompressorHuffman::divideTableVector(unsigned char ** table, int
     return Vector;
 }
 
-/*void CompressorHuffman::convertCode(FILE * arquivoDescomprimido, unsigned char ** tabela, char *nomeArquivoComprimido, int qtdTiposCaracter, int numNodeTree, char * extencaoArquivoDescomprimido)
+void CompressorHuffman::convertCode(unsigned char ** tabela, int qtdTiposCaracter, int numNodeTree)
 {
     int i = 0, j = 0;
-	int contCaracterNome = 0;
-	char vetorDeBytes[SIZE_VECTOR_BYTES];
+	//int contCaracterNome = 0;
+	unsigned int sizeVectorBytes = dados.getBufferSize();
+	unsigned char * vetorDeBytes = new unsigned char[sizeVectorBytes];
+	unsigned char * bufferLido = new unsigned char[sizeVectorBytes];
 	int posVetorDeBytes = 0;
+
+	char stringQtdTiposCaracter[16];
+	char stringNumNodeTree[16];
 	
+	char * extensao = dados.getExt();
+	for(i = 0; extensao[i] != '\0'; i++){
+		vetorDeBytes[posVetorDeBytes++] = extensao[i];
+	}
+	vetorDeBytes[posVetorDeBytes++] = '\0';
+	
+	sprintf(stringQtdTiposCaracter, "%d", qtdTiposCaracter);
+	for(i = 0; stringQtdTiposCaracter[i] != '\0'; i++){
+		vetorDeBytes[posVetorDeBytes++] = stringQtdTiposCaracter[i];
+	}
+	vetorDeBytes[posVetorDeBytes++] = '\0';
+
+	sprintf(stringNumNodeTree, "%d", numNodeTree);
+	for(i = 0; stringNumNodeTree[i] != '\0'; i++){
+		vetorDeBytes[posVetorDeBytes++] = stringNumNodeTree[i];
+	}
+	vetorDeBytes[posVetorDeBytes++] = '\0';
+	
+	dadosSaida.setOpenFile(false, false);
+	
+	//Até esse ponto eu concidero que não vou estourar nunca o tamanho do buffer, daki em diante tem que conciderar esse caso.
+
+	/********************************Parte para remover ******************************
 	for(i = 0; nomeArquivoComprimido[i] != '\0'; i++){
 		contCaracterNome++;
 	}
@@ -275,58 +303,96 @@ unsigned char * CompressorHuffman::divideTableVector(unsigned char ** table, int
     fprintf(arquivoComprimido,"%c",'\0');
     fprintf(arquivoComprimido, "%d", numNodeTree);
     fprintf(arquivoComprimido,"%c",'\0');
+*/
 
+	cout << "Resultado de abertura para escrita = " << dadosSaida.getFileIsOpen() << std::endl;
+
+	std::cout << "Tamanho do buffer = " << dados.getBufferSize() << std::endl;
+//	getchar();
     for(i = 0; i < qtdTiposCaracter; i++)
     {
         for(j = 0; j==0 || tabela[i][j] != '\0'; j++)
         {
-            fprintf(arquivoComprimido, "%c", tabela[i][j]);
+//            fprintf(arquivoComprimido, "%c", tabela[i][j]);
         }
 
+  //      fprintf(arquivoComprimido, "%c", tabela[i][j]);
+    }
+/*
+    for(i = 0; i < qtdTiposCaracter; i++)
+    {
+		cout << "Entrou no for1" << endl;
+
+        for(j = 0; j==0 || tabela[i][j] != '\0'; j++)
+        {
+
+			getchar();
+			cout << "entrou do for2" << endl;
+			//vetorDeBytes[posVetorDeBytes] = tabela[i][j];
+			cout  << "Posicao Atual = " << posVetorDeBytes << " i = " << i << "j = " << j << endl;
+			posVetorDeBytes = (posVetorDeBytes+1)%sizeVectorBytes;//quando estourar ele retorna 0 para posVectorDeBytes, então posso gravar
+			if(posVetorDeBytes == 0){
+				dadosSaida.write(vetorDeBytes, sizeVectorBytes);//fwrite(vetorDeBytes, sizeof(unsigned char), sizeVectorBytes, arquivoComprimido);
+			}
+            fprintf(arquivoComprimido, "%c", tabela[i][j]);
+        }
+		vetorDeBytes[posVetorDeBytes] = tabela[i][j];
+		posVetorDeBytes = (posVetorDeBytes+1)%sizeVectorBytes;//quando estourar ele retorna 0 para posVectorDeBytes, então posso gravar
+		if(posVetorDeBytes == 0){
+			dadosSaida.write(vetorDeBytes, sizeVectorBytes);//fwrite(vetorDeBytes, sizeof(unsigned char), sizeVectorBytes, arquivoComprimido);
+		}
         fprintf(arquivoComprimido, "%c", tabela[i][j]);
     }
-
+*/
+	/*******************Fim da parte que tem que remover*************************************/
     unsigned char c;// recebe o byte lido do arquivo descomprimido
     char binario[8];// vai conter o código bit a bit
     int contBin = 0;// conta em qual bit está o código
     unsigned char gravaArquivo; //variável que vai receber o valor em ASCII equivalente do código de binário[8]
-    fseek(arquivoDescomprimido, 0, SEEK_SET);
-    while(!feof(arquivoDescomprimido))
+	unsigned int qtdLido = 0;
+  //  fseek(arquivoDescomprimido, 0, SEEK_SET);
+    //while(!feof(arquivoDescomprimido))
+	//dadosSaida.setOpenFile(false, true);
+	while((qtdLido = dados.read(bufferLido, sizeVectorBytes)) > 0)
     {
-        fscanf(arquivoDescomprimido, "%c", &c);
-        if(!feof(arquivoDescomprimido)) // isso é pq se chegar no EOF significa que não é pra gravar o c por assim estaria gravando o EOF e na hora que for descomprimir e criar um novo arquivo ele terá dois EOF, o que não pode
-        {
-            for(i = 0; i < qtdTiposCaracter; i++)
-            {
-                if(tabela[i][0] == c)
-                {
-                    j = 1;
-                    while(tabela[i][j] != '\0') //para gravar está aqui dentro por que ele só gravara o conteudo que ler na tabela
-                    {
-                        if(contBin < 8) // quando contBin atinngir 8 implica que completou o byte e tem de converter e salvar no arquivo
-                        {
-                            binario[contBin] = tabela[i][j];//pego a sequencia contida na tabela até atingir o fim da string ou atingir o limite do byte
-                            contBin++;
-                            j++; //cada vez q salvo o codigo correspondente do caminho no binário, eu devo verificar o que tem na próxima posição da tabela
-                        }
-                        else
-                        {
-                            gravaArquivo = bintoASCII(binario);//aqui converto os '1' e '0' em sequencia no código binario correspondente
-							// Trecho adicionei para enviar com rajada
-							vetorDeBytes[posVetorDeBytes] = gravaArquivo;
-							posVetorDeBytes = (posVetorDeBytes+1)%SIZE_VECTOR_BYTES;//quando estourar ele retorna 0 para posVectorDeBytes, então posso gravar
-							if(posVetorDeBytes == 0){
-								fwrite(vetorDeBytes, sizeof(unsigned char), SIZE_VECTOR_BYTES, arquivoComprimido);
-							}
-              				// Fim trecho para enviar com rajada 
-							//fprintf(arquivoComprimido, "%c", gravaArquivo);// aqui estou gravando o dado convertido para byte
-                            contBin = 0;//está sendo zerado para iniciar outro byte, ele é posto igual a zero apenas quando grava no arquivo
-                        }
-                    }
-                    break;//ele faz o for até achar o 'c' equivalente na tabela, quando ele encontra pode encerrar o for para ler novamente outro caracter
-                }
-            }
-        }
+		for(unsigned int iBuffer = 0; iBuffer < qtdLido; iBuffer++){
+		    //fscanf(arquivoDescomprimido, "%c", &c);
+			c = bufferLido[iBuffer];
+		    //if((qtdLido == sizeVectorBytes) || (qtdLido < sizeVectorBytes && iBuffer < (qtdLido-1)) // isso é pq se chegar no EOF significa que não é pra gravar o c por assim estaria gravando o EOF e na hora que for descomprimir e criar um novo arquivo ele terá dois EOF, o que não pode
+			if((qtdLido == sizeVectorBytes) || (iBuffer < (qtdLido-1))) // isso é pq se chegar no EOF significa que não é pra gravar o c por assim estaria gravando o EOF e na hora que for descomprimir e criar um novo arquivo ele terá dois EOF, o que não pode
+		    {
+		        for(i = 0; i < qtdTiposCaracter; i++)
+		        {
+		            if(tabela[i][0] == c)
+		            {
+		                j = 1;
+		                while(tabela[i][j] != '\0') //para gravar está aqui dentro por que ele só gravara o conteudo que ler na tabela
+		                {
+		                    if(contBin < 8) // quando contBin atinngir 8 implica que completou o byte e tem de converter e salvar no arquivo
+		                    {
+		                        binario[contBin] = tabela[i][j];//pego a sequencia contida na tabela até atingir o fim da string ou atingir o limite do byte
+		                        contBin++;
+		                        j++; //cada vez q salvo o codigo correspondente do caminho no binário, eu devo verificar o que tem na próxima posição da tabela
+		                    }
+		                    else
+		                    {
+		                        gravaArquivo = bintoASCII(binario);//aqui converto os '1' e '0' em sequencia no código binario correspondente
+								// Trecho adicionei para enviar com rajada
+								vetorDeBytes[posVetorDeBytes] = gravaArquivo;
+								posVetorDeBytes = (posVetorDeBytes+1)%sizeVectorBytes;//quando estourar ele retorna 0 para posVectorDeBytes, então posso gravar
+								if(posVetorDeBytes == 0){
+									dadosSaida.write(vetorDeBytes, sizeVectorBytes);//fwrite(vetorDeBytes, sizeof(unsigned char), sizeVectorBytes, arquivoComprimido);
+								}
+		          				// Fim trecho para enviar com rajada 
+								//fprintf(arquivoComprimido, "%c", gravaArquivo);// aqui estou gravando o dado convertido para byte
+		                        contBin = 0;//está sendo zerado para iniciar outro byte, ele é posto igual a zero apenas quando grava no arquivo
+		                    }
+		                }
+		                break;//ele faz o for até achar o 'c' equivalente na tabela, quando ele encontra pode encerrar o for para ler novamente outro caracter
+		            }
+		        }
+		    }
+		}
     }
     //se contBin = 4 então faltam 4 espaços para completar 1byte, pois foi inserido o 3 e em seguida foi incrementado o 4, ou seja o 4 não foi inserido,
     //se for igual a 2 então faltam 6 ou seja serão completado 8-contBin espaços
@@ -338,19 +404,109 @@ unsigned char * CompressorHuffman::divideTableVector(unsigned char ** table, int
         }
         gravaArquivo = bintoASCII(binario);// converto o ultimo Byte junto com o padding
 		vetorDeBytes[posVetorDeBytes] = gravaArquivo; 
-		fwrite(vetorDeBytes, sizeof(unsigned char), posVetorDeBytes+1, arquivoComprimido);
+		dadosSaida.write(vetorDeBytes, posVetorDeBytes + 1);//fwrite(vetorDeBytes, sizeof(unsigned char), posVetorDeBytes+1, arquivoComprimido);
 //        fprintf(arquivoComprimido, "%c", gravaArquivo);//salvando esse byte
     }
     //agora preciso salvar quantos digitos de padding foi inserido no arquivo ou seja 8-contBin
-    fprintf(arquivoComprimido, "%d", 8-contBin);//estou fazendo com %c pra ver se fica mais otimizado com menos espaço, mais pode dar mais certo com %d
-    fclose(arquivoComprimido);
+	posVetorDeBytes = 0;
+	char padding;
+    sprintf(&padding, "%d", 8-contBin);//estou fazendo com %c pra ver se fica mais otimizado com menos espaço, mais pode dar mais certo com %d
+	vetorDeBytes[posVetorDeBytes] = padding; 
+	dadosSaida.write(vetorDeBytes, 1);
+    //fclose(arquivoComprimido);
+	dadosSaida.setCloseFile();
 }
-*/
+
+void CompressorHuffman::FreeTableBytes(unsigned char *** tabela, int qtdTiposCaracter){
+	int i = 0;// j = 0; 
+	unsigned char ** test = (*tabela);
+	for(i = 0; i < qtdTiposCaracter; i++){
+		free(test[i]);
+	}
+	free(test);
+}
+
+
+//funções para maniputação com binários e em ASCII
+
+char CompressorHuffman::bintoASCII(char binario[8])
+{
+    int i;
+    unsigned char value = 0;
+    for(i = 0; i < 8; i++)
+    {
+        if(binario[i] == '1')
+            value += pow(2, 7-i);
+    }
+    return value;
+}
+
+void CompressorHuffman::ascIItoBin(unsigned char let, char bin[8])
+{
+    int i;
+    //int j;
+    for(i = 0; i<8; i++)
+    {
+
+        bin[7-i] = let%2;
+        let = let / 2;
+    }
+}
+
+int CompressorHuffman::imprimeBIN(char t[9])
+{
+    int i = 0;
+    int imprime = 0;
+    for(i = 0; i < 8; i++)
+    {
+        imprime += t[7-i]*pow(10, i);
+    }
+    return imprime;
+}
+
+char * CompressorHuffman::toStringBin(char t[9])
+{
+    int i = 0;
+    char * imprime = (char*)malloc(9*sizeof(char));
+    for(i = 0; i < 8; i++)
+    {
+        if(t[i] == 1)
+            t[i] = '1';
+        else
+            t[i] = '0';
+    }
+    t[8] ='\0';
+    return imprime;
+}
+
+char * CompressorHuffman::getExtencaoArquivo(char * nomeArquivo){
+	int i;
+	int posPonto = 0;
+	int contTamanhoExtencao = 0;
+	for(i = strlen(nomeArquivo); i >= 0 ; i--){
+		contTamanhoExtencao++;
+		if(nomeArquivo[i] == '.'){
+			posPonto = i;
+			break;
+		}
+	}
+	char * extencao;
+	if(posPonto <= 0){
+		extencao = new char[1];
+		extencao[0] = '\0';
+		return extencao;
+	}
+	extencao = new char[contTamanhoExtencao+1];
+	for(i = 0; i < contTamanhoExtencao+1; i++){
+		extencao[i] = nomeArquivo[posPonto+i];
+	}
+	return extencao;	
+}
 
 
 /***************************************End Protected function********************************************/
 
-CompressorHuffman::CompressorHuffman(DadosCompressorIF & d) : dados(d){
+CompressorHuffman::CompressorHuffman(DadosCompressorIF & d, DadosCompressorIF & ds) : dados(d), dadosSaida(ds){
 	//this->dados = dados;
 }
 
@@ -362,25 +518,35 @@ DadosCompressorIF & CompressorHuffman::getDados(){
 }
 
 bool CompressorHuffman::compress(){
-	cout << "Comprimindo " << endl;
-
+	//cout << "Comprimindo " << endl;
+	system("echo 0 | dialog --title 'Comprimindo' --gauge '\nLendo dados' 8 40 6");
 	unsigned char ** tabela = nullptr;
 	FrequencyData * treeHuffman = nullptr;
 	int numNodeTree = 0;
 	int tiposCaracter = 0;
 
 	tiposCaracter = vectorForHeap();
+	system("(echo 10; sleep 1) | dialog --title 'Comprimindo' --gauge '\nGerando Arvore de Huffman' 8 40 6");
+
 	treeHuffman = BuildHuffmanTree();
-	printHuffmanTree(treeHuffman, 0, true);
-	cout << "Raiz da Arvore = " << treeHuffman << endl;
+
+	system("(echo 20; sleep 1) | dialog --title 'Comprimindo' --gauge '\nIniciando Compressao' 8 40 6");
+	//printHuffmanTree(treeHuffman, 0, true);
+	//cout << "Raiz da Arvore = " << treeHuffman << endl;
 	numNodeTree = qtdNodeTree(treeHuffman);
-	cout << "Numero de nos na arvore de Huffman = " << numNodeTree << endl; 
-	cout << "Quantidade de tipos de caracter = " << tiposCaracter << endl;
+	//cout << "Numero de nos na arvore de Huffman = " << numNodeTree << endl; 
+	//cout << "Quantidade de tipos de caracter = " << tiposCaracter << endl;
+	system("(echo 25; sleep 1) | dialog --title 'Comprimindo' --gauge '\nGerando Tabela de caracteres' 8 40 6");
 	tabela = tableTree(treeHuffman, numNodeTree, tiposCaracter);
-	cout << "tabela de converssao" << endl;
-	for(int i = 0; i < tiposCaracter; i++)
-		cout << tabela[i] << endl;
+	//cout << "tabela de converssao" << endl;
+	//for(int i = 0; i < tiposCaracter; i++)
+		//cout << tabela[i] << endl;
+	//cout << "quantidade node tree =  " << numNodeTree << endl;
+	system("(echo 30; sleep 1) | dialog --title 'Comprimindo' --gauge '\nConvertendo o codigo' 8 40 6");
+	convertCode(tabela, tiposCaracter, numNodeTree);
 	
+	delete treeHuffman;
+	FreeTableBytes(&tabela, tiposCaracter);
 	return true;
 }
 

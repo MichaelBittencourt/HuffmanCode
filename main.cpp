@@ -43,7 +43,7 @@ int main(int argc, char *args[])
 		//DadosTest d;
 		//DadosCompressorIF & dados(d);// = new DadosTest();		
 		//CompressorIF * compressor =  new CompressorExemplo(*(new DadosTest()));
-		CompressorIF * compressor =  new CompressorHuffman(*(new File(args[2])));
+		CompressorIF * compressor =  new CompressorHuffman(*(new File(args[2])), *(new File(args[3])));
     	/***************For this compressor ******************/
 				
         if(strcmp(args[1], "-c")==0)

@@ -3,19 +3,27 @@
 
 File::File(const char* filename){
 	unsigned int i = 0;
+//	for (; filename[i] != '.' && filename[i] != '\0'; i++);
+	for(i = strlen(filename); i >= 0 ; i--){
+		if(filename[i] == '.'){
+			break;
+		}
+	}
 	
-	for (; filename[i] != '.' && filename[i] != '\0'; i++);
-	
-	if(filename[i] == '\0'){
+	if(i < 0){
 		// error ... is not a valid file
 	}
 	else{
-		this->filename = new char[i];
-		for(unsigned k = 0; k < i; k++)
+		this->filename = new char[i+1];
+		for(unsigned int k = 0; k < i; k++)
 			this->filename[k] = filename[k];
-		this->ext = new char[std::strlen(filename) - i];
-		for(unsigned int k = 0; strlen(filename) - i; k++)
-			this->ext[k] = filename[i++];		
+		this->filename[i] = '\0';
+
+		this->ext = new char[std::strlen(filename) - i+1];
+		unsigned int k = 0;
+		for(; strlen(filename) - i; k++) //Renno doido do krai.rsrsrsrs Essa porra pega pq ele incrementa o i quando i = strlen o loop quebra.
+			this->ext[k] = filename[i++];
+		this->ext[k] = '\0';
 	
 	}
 	std::cout << "Filename: " << this->filename << std::endl;
@@ -159,18 +167,16 @@ unsigned long* File::getArrayFrequency(){
 	return frequency;
 }
 
-char* File::getExt() const {
+char* File::getExt(){
 	return this->ext;
 }
 
-char* File::getFilename() const{
+char* File::getFilename(){
 	return this->filename;
 
 }
 
 void File::write(const unsigned char *ArrayDados, const unsigned int size){
-	std::string filename(this->filename);
-	filename.append(this->ext);
 	if(file_is_open){
 		unsigned int write_bytes = std::fwrite((const void*) ArrayDados, sizeof(char), size, file_pointer);
 		std::cout << write_bytes << std::endl;
@@ -203,7 +209,9 @@ void File::operator = (DadosCompressorIF & copia){
 
 bool File::setOpenFile(bool for_read, bool append){
 	std::string filename(this->filename);
-	filename.append(this->ext);
+	std::string ext(this->ext);
+	filename += ext;
+	std::cout << "Nome Arquivo para Abrir = " << filename << std::endl;
 	this->append = append;
 	
 	if(for_read) {
@@ -217,7 +225,7 @@ bool File::setOpenFile(bool for_read, bool append){
 	}
 	
 	if(this->file_pointer) {
-		file_is_open = true;
+		this->file_is_open = true;
 		return true;
 	}
 	
@@ -228,10 +236,19 @@ bool File::setOpenFile(bool for_read, bool append){
 	return false;
 }
 bool File::setCloseFile(){
-	if(file_is_open){
+	if(this->file_is_open){
+		this->file_is_open = false;
 		fclose(this->file_pointer);	
 		return true;
 	}
 	return false; // file already close
+}
+
+unsigned int File::getBufferSize(){
+	return BUFFER_SIZE;
+}
+
+bool File::getFileIsOpen(){
+	return file_is_open;
 }
 

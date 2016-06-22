@@ -5,10 +5,14 @@
 #include <queue>
 #include <string>
 #include <string.h>
+#include <cmath>
+#include <stdio.h>
 #include "CompressorIF.h"
 #include "DadosCompressorIF.h"
 #include "FrequencyData.h"
-#define SIZE_VECTOR_BYTES 1000384
+//#define SIZE_VECTOR_BYTES BUFFER_SIZE
+//1000384
+#define TAM_MAX_EXTENCAO 10
 
 using namespace std;
 
@@ -74,6 +78,7 @@ class CompressorHuffman : public CompressorIF{
 	protected:
 
 		DadosCompressorIF & dados;
+		DadosCompressorIF & dadosSaida;
 		priority_queue<FrequencyData *, std::vector<FrequencyData *>, comparatorLong> minHeap;
 		int vectorForHeap();
 		FrequencyData * BuildHuffmanTree();
@@ -84,10 +89,11 @@ class CompressorHuffman : public CompressorIF{
 		int achaFolha(unsigned char ** table, FrequencyData * arvore, int posFolha, int numNodeTree);
 		void invertTable(unsigned char ** table, int numNodeTree, int typeNodeTree);
 		unsigned char * divideTableVector(unsigned char ** table, int numNodeTree, int typeNodeTree);
-/*		void convertCode(FILE * arquivoDescomprimido, unsigned char ** tabela, char *nomeArquivoComprimido, int qtdTiposCaracter, int numNodeTree, char * extencaoArquivoDescomprimido);
+		void convertCode(unsigned char ** tabela, int qtdTiposCaracter, int numNodeTree);
 
-		void FreeHuffmanTree(Node ** arvore);
-		void FreeListValue(ListaDENode ** lista);
+
+		//void FreeHuffmanTree(FrequencyData ** arvore);
+		//void FreeListValue(ListaDENode ** lista);
 		void FreeTableBytes(unsigned char *** tabela, int qtdTiposCaracter);
 
 		//funções para manipulação de Binarios e ASCII
@@ -97,13 +103,11 @@ class CompressorHuffman : public CompressorIF{
 		char * toStringBin(char t[9]);
 
 		char * getExtencaoArquivo(char * nomeArquivo);
-
-*/
 		
 	
 	public:
 		//CompressorHuffman();
-		CompressorHuffman(DadosCompressorIF &d);
+		CompressorHuffman(DadosCompressorIF &d, DadosCompressorIF &ds);
 		
 		void setDados(DadosCompressorIF &dados);
 		DadosCompressorIF& getDados();
